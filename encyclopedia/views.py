@@ -8,6 +8,14 @@ def index(request):
         "entries": util.list_entries()
     })
 
+def convert_md_to_html(title):
+    content = util.get_entry(title)
+    markdowner = Markdown()
+    if content == None:
+        return None
+    else:
+        return markdowner.convert(content)
+
 def add(request):
     if request.method == "GET":
         return render(request, "encyclopedia/add.html")
@@ -26,14 +34,6 @@ def add(request):
                 'title' : title,
                 'content' : html_content
             })
-
-def convert_md_to_html(title):
-    content = util.get_entry(title)
-    markdowner = Markdown()
-    if content == None:
-        return None
-    else:
-        return markdowner.convert(content)
 
 def edit(request):
     if request.method == "POST":
